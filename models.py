@@ -14,13 +14,13 @@ class Author(Document):
 
 class Quote(Document):
     author = ReferenceField(Author, reverse_delete_rule=CASCADE)
-    tags = ListField(StringField(max_length=15))
+    tags = ListField(StringField(max_length=1000))
     quote = StringField()
     meta = {
         "collection": "quotes"
     }
 
-    # def to_json(self, *args, **kwargs):
-    #     data = self.to_mongo(*args, **kwargs)
-    #     data["author"] = self.author.fullname
-    #     return json_util.dumps(data, ensure_ascii=True)
+    def to_json(self, *args, **kwargs):
+        data = self.to_mongo(*args, **kwargs)
+        data["author"] = self.author.fullname
+        return json_util.dumps(data, ensure_ascii=True)
